@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BusinessIdeas.com — Find Your Best Business Idea in 60 Seconds</title>
+  <meta name="description" content="Take a 60-second quiz to get personalized business ideas matched to your skills, budget, and income goals." />
+  <meta name="theme-color" content="#ffffff" />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --surface:#ffffff;
+      --surface2:#f7f8fb;
+      --border:#e7e9f0;
+      --text:#0b1220;
+      --muted:#5b6477;
+      --muted2:#7a8295;
+      --accent:#2b6fff;
+      --accent2:#1f58ff;
+      --success:#1a9b6b;
+      --shadow: 0 12px 28px rgba(16,24,40,.08);
+      --shadow2: 0 10px 18px rgba(16,24,40,.06);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1120px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, rgba(43,111,255,.10), transparent 55%),
+        radial-gradient(900px 600px at 85% 0%, rgba(26,155,107,.08), transparent 50%),
+        var(--bg);
+      line-height:1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 22px;}
+    .topbar{
+      position:sticky; top:0; z-index:40;
+      backdrop-filter:saturate(140%) blur(10px);
+      background: rgba(255,255,255,.72);
+      border-bottom:1px solid rgba(231,233,240,.65);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height:68px;
+    }
+
+    .brand{
+      display:flex; gap:12px; align-items:center;
+      text-decoration:none;
+    }
+    .logo{
+      width:36px;height:36px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(43,111,255,1), rgba(26,155,107,1));
+      box-shadow: 0 10px 18px rgba(43,111,255,.18);
+    }
+    .brand span{
+      font-weight:750;
+      letter-spacing:-0.02em;
+    }
+    .nav{
+      display:flex; gap:18px; align-items:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .nav a{
+      text-decoration:none;
+      padding:10px 10px;
+      border-radius:12px;
+    }
+    .nav a:hover{background:rgba(247,248,251,.9); color:var(--text);}
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      border:1px solid rgba(43,111,255,.18);
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      color:#fff;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 14px 24px rgba(43,111,255,.20);
+      transform: translateY(0);
+      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 18px 30px rgba(43,111,255,.26);
+      filter:saturate(1.08);
+    }
+    .btn:active{transform: translateY(0); box-shadow: 0 12px 20px rgba(43,111,255,.18);}
+    .btn.secondary{
+      background: #fff;
+      color: var(--text);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow2);
+    }
+    .btn.secondary:hover{box-shadow: var(--shadow); transform: translateY(-1px);}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.7);
+      color: var(--muted);
+      font-weight:650;
+      font-size:13px;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--success);
+      box-shadow: 0 0 0 6px rgba(26,155,107,.12);
+    }
+
+    /* HERO */
+    .hero{padding:54px 0 26px;}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:28px;
+      align-items:stretch;
+    }
+    .hero h1{
+      font-size: clamp(34px, 4vw, 54px);
+      line-height:1.05;
+      letter-spacing:-0.035em;
+      margin:18px 0 12px;
+    }
+    .hero p{
+      font-size: clamp(16px, 1.25vw, 18px);
+      color: var(--muted);
+      margin:0 0 18px;
+      max-width: 60ch;
+    }
+
+    .hero-actions{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:10px;}
+    .micro{
+      font-size:13px; color:var(--muted2);
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:10px;
+    }
+    .micro span{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background: rgba(255,255,255,.6);
+    }
+    .mini-star{
+      width:14px;height:14px; display:inline-block;
+      background: radial-gradient(circle at 30% 30%, #ffd45c, #ffb300);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    .hero-card{
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(231,233,240,.85);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 260px at 20% 0%, rgba(43,111,255,.16), transparent 55%),
+                  radial-gradient(380px 260px at 80% 10%, rgba(26,155,107,.14), transparent 58%);
+      pointer-events:none;
+    }
+    .hero-card > *{position:relative}
+
+    .quiz-preview-top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .chip{
+      font-size:12px; font-weight:750;
+      border:1px solid rgba(43,111,255,.20);
+      color: rgba(43,111,255,1);
+      background: rgba(43,111,255,.06);
+      padding:8px 10px;
+      border-radius:999px;
+      letter-spacing:.01em;
+    }
+    .progress{
+      height:10px; width:100%;
+      background: rgba(231,233,240,.9);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar{
+      height:100%;
+      width:14%;
+      background: linear-gradient(90deg, rgba(43,111,255,1), rgba(26,155,107,1));
+      border-radius:999px;
+    }
+    .q{
+      margin-top:14px;
+      background: rgba(247,248,251,.85);
+      border:1px solid var(--border);
+      border-radius: 18px;
+      padding:14px;
+    }
+    .q-title{font-weight:800; letter-spacing:-.01em; margin:0 0 10px;}
+    .answers{display:grid; gap:10px;}
+    .ans{
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: #fff;
+      display:flex; align-items:center; justify-content:space-between;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      font-weight:650;
+    }
+    .ans:hover{
+      transform: translateY(-1px);
+      box-shadow: var(--shadow2);
+      border-color: rgba(43,111,255,.22);
+    }
+    .ans small{color:var(--muted); font-weight:650;}
+    .arrow{
+      width:28px;height:28px;border-radius:10px;
+      border:1px solid var(--border);
+      display:grid; place-items:center;
+      background: rgba(247,248,251,.9);
+      color: var(--muted);
+    }
+
+    /* SECTIONS */
+    section{padding:34px 0;}
+    .section-card{
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(231,233,240,.85);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+      padding:22px;
+    }
+    .h2{
+      font-size: clamp(22px, 2.2vw, 30px);
+      letter-spacing:-.03em;
+      line-height:1.15;
+      margin:0 0 10px;
+    }
+    .lead{color:var(--muted); margin:0 0 16px; max-width: 75ch;}
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 18px;
+      padding:16px;
+      box-shadow: 0 10px 18px rgba(16,24,40,.04);
+      min-height: 120px;
+    }
+    .card strong{display:block; font-size:15px; letter-spacing:-.01em;}
+    .card p{margin:8px 0 0; color:var(--muted); font-size:14px;}
+    .icon{
+      width:34px;height:34px;border-radius:12px;
+      display:grid;place-items:center;
+      border:1px solid var(--border);
+      background: rgba(247,248,251,.9);
+      margin-bottom:10px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    ul.clean{margin:0; padding:0; list-style:none; display:grid; gap:10px;}
+    .li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      border-radius:16px;
+      background: rgba(255,255,255,.9);
+    }
+    .check{
+      width:18px;height:18px;border-radius:6px;
+      background: rgba(26,155,107,.12);
+      border:1px solid rgba(26,155,107,.25);
+      margin-top:2px;
+      position:relative;
+      flex:0 0 auto;
+    }
+    .check:after{
+      content:"";
+      position:absolute;
+      left:4px; top:3px;
+      width:9px; height:6px;
+      border-left:2px solid rgba(26,155,107,1);
+      border-bottom:2px solid rgba(26,155,107,1);
+      transform: rotate(-45deg);
+    }
+    .li b{display:block; font-size:14px;}
+    .li span{display:block; color:var(--muted); font-size:13px; margin-top:2px;}
+
+    .cta-band{
+      padding:26px;
+      border-radius: var(--radius2);
+      background:
+        radial-gradient(420px 260px at 20% 0%, rgba(43,111,255,.16), transparent 60%),
+        radial-gradient(420px 260px at 80% 30%, rgba(26,155,107,.14), transparent 60%),
+        rgba(255,255,255,.78);
+      border:1px solid rgba(231,233,240,.9);
+      box-shadow: var(--shadow);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    .cta-band .text{max-width: 70ch;}
+    .cta-band h3{
+      margin:0 0 6px;
+      font-size: clamp(18px, 2vw, 24px);
+      letter-spacing:-.03em;
+      line-height:1.12;
+    }
+    .cta-band p{margin:0; color:var(--muted);}
+
+    footer{
+      padding:26px 0 40px;
+      color: var(--muted2);
+      font-size:13px;
+    }
+    .footer-inner{
+      display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      border-top:1px solid rgba(231,233,240,.85);
+      padding-top:18px;
+    }
+    .footer-inner a{color:inherit; text-decoration:none;}
+    .footer-inner a:hover{text-decoration:underline;}
+
+    /* MODAL */
+    .overlay{
+      position:fixed; inset:0; z-index:80;
+      background: rgba(11,18,32,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .overlay.show{display:flex;}
+    .modal{
+      width:min(720px, 100%);
+      background:#fff;
+      border-radius: 22px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.15);
+    }
+    .modal-head{
+      padding:16px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      border-bottom:1px solid var(--border);
+      background: rgba(247,248,251,.85);
+    }
+    .modal-head strong{letter-spacing:-.02em;}
+    .x{
+      width:38px; height:38px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background:#fff;
+      cursor:pointer;
+      display:grid; place-items:center;
+    }
+    .modal-body{padding:18px;}
+    .modal-body h4{margin:0 0 6px; font-size:18px; letter-spacing:-.02em;}
+    .modal-body p{margin:0 0 12px; color:var(--muted);}
+
+    .choices{display:grid; gap:10px; margin-top:12px;}
+    .choice{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px;
+      border:1px solid var(--border);
+      border-radius: 16px;
+      cursor:pointer;
+      background:#fff;
+      font-weight:700;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .choice:hover{transform: translateY(-1px); box-shadow: var(--shadow2); border-color: rgba(43,111,255,.22);}
+    .modal-foot{
+      padding:14px 18px;
+      border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      background: rgba(255,255,255,.86);
+    }
+    .kbd{
+      font-size:12px; color:var(--muted2);
+      display:flex; align-items:center; gap:6px;
+    }
+    .kbd i{
+      font-style:normal;
+      border:1px solid var(--border);
+      background: rgba(247,248,251,.95);
+      padding:4px 8px;
+      border-radius: 10px;
+    }
+
+    /* Sticky mobile CTA */
+    .sticky-cta{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:60;
+      padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.8);
+      border-top:1px solid rgba(231,233,240,.85);
+      backdrop-filter: blur(10px);
+      display:none;
+    }
+    .sticky-cta .wrap{
+      max-width: var(--max);
+      margin:0 auto;
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .sticky-cta .copy{
+      display:flex; flex-direction:column;
+      gap:2px;
+      min-width: 0;
+    }
+    .sticky-cta .copy b{font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .sticky-cta .copy span{font-size:12px; color:var(--muted2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns:1fr; }
+      .nav{display:none;}
+      .grid3{grid-template-columns:1fr;}
+      .split{grid-template-columns:1fr;}
+      .cta-band{flex-direction:column; align-items:flex-start;}
+    }
+    @media (max-width: 720px){
+      .sticky-cta{display:block;}
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none !important; scroll-behavior:auto !important;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <a class="brand" href="#">
+          <div class="logo" aria-hidden="true"></div>
+          <span>BusinessIdeas.com</span>
+        </a>
+
+        <nav class="nav" aria-label="Page">
+          <a href="#how">How it works</a>
+          <a href="#what">What it checks</a>
+          <a href="#for">Who it’s for</a>
+          <a href="#start" class="btn" id="topStart">Start Free Quiz</a>
+        </nav>
+
+        <a class="btn" href="#start" id="topStartMobile" style="display:none;">Start Free Quiz</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero" id="start">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="pill"><span class="dot"></span> Personalized idea matching • 2025-ready</div>
+            <h1>Discover the best business idea for <u>you</u> — in 60 seconds</h1>
+            <p>
+              Answer a few quick questions and get a personalized business idea matched to your skills,
+              budget, and income goals. No endless lists. No fluff.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn" id="openQuizBtn" type="button">👉 Start the Free Idea Finder Quiz</button>
+              <a class="btn secondary" href="#how">See how it works</a>
+            </div>
+
+            <div class="micro" aria-label="Trust and friction reducers">
+              <span><i class="mini-star" aria-hidden="true"></i> Trusted by 250,000+ builders</span>
+              <span>⏱ ~1 minute</span>
+              <span>🔒 No email required to start</span>
+            </div>
+          </div>
+
+          <!-- RIGHT HERO CARD (Quiz preview) -->
+          <aside class="hero-card" aria-label="Quiz preview">
+            <div class="quiz-preview-top">
+              <div class="chip">IDEA FINDER QUIZ</div>
+              <div style="color:var(--muted2); font-weight:700; font-size:13px;">Step <b>1</b> of <b>7</b></div>
+            </div>
+            <div class="progress" aria-hidden="true"><div class="bar"></div></div>
+
+            <div class="q">
+              <p class="q-title">What’s your primary goal?</p>
+              <div class="answers">
+                <div class="ans" data-open-quiz><span>Start a side income</span><span class="arrow">→</span></div>
+                <div class="ans" data-open-quiz><span>Replace my salary</span><span class="arrow">→</span></div>
+                <div class="ans" data-open-quiz><span>Build something scalable</span><span class="arrow">→</span></div>
+              </div>
+              <p style="margin:12px 0 0; color:var(--muted2); font-size:13px;">
+                You’ll get instant results + a recommended next step.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: HOW IT WORKS -->
+    <section id="how">
+      <div class="container">
+        <div class="section-card">
+          <h2 class="h2">This isn’t a list of random business ideas</h2>
+          <p class="lead">
+            Most sites dump 200 ideas on you. We filter fast — so you only see options that fit your time,
+            skills, budget, and your preferred style of work.
+          </p>
+
+          <div class="grid3" role="list">
+            <div class="card" role="listitem">
+              <div class="icon" aria-hidden="true">⏱</div>
+              <strong>Fits your schedule</strong>
+              <p>We prioritize ideas that match your weekly time and energy, not fantasy plans.</p>
+            </div>
+            <div class="card" role="listitem">
+              <div class="icon" aria-hidden="true">🧩</div>
+              <strong>Matches your skills</strong>
+              <p>Your experience becomes the advantage — or we suggest beginner-friendly models.</p>
+            </div>
+            <div class="card" role="listitem">
+              <div class="icon" aria-hidden="true">📈</div>
+              <strong>Optimized for 2025</strong>
+              <p>We account for demand, distribution channels, and what’s working right now.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn" type="button" data-open-quiz>Start the Free Quiz →</button>
+            <span class="pill">No spam • Fast • Personalized</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: WHAT IT CHECKS -->
+    <section id="what">
+      <div class="container">
+        <div class="split">
+          <div class="section-card">
+            <h2 class="h2">What the quiz looks at</h2>
+            <p class="lead">A few inputs that instantly narrow hundreds of options down to the ones that make sense.</p>
+            <ul class="clean">
+              <li class="li">
+                <span class="check"></span>
+                <div><b>Income goal</b><span>Side income, full-time, or scalable growth.</span></div>
+              </li>
+              <li class="li">
+                <span class="check"></span>
+                <div><b>Time available weekly</b><span>So we don’t recommend ideas you can’t maintain.</span></div>
+              </li>
+              <li class="li">
+                <span class="check"></span>
+                <div><b>Budget & risk tolerance</b><span>From $0 starts to higher leverage bets.</span></div>
+              </li>
+              <li class="li">
+                <span class="check"></span>
+                <div><b>Skills & interest areas</b><span>Use what you have — or start simple.</span></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="section-card">
+            <h2 class="h2">Built on what’s working now</h2>
+            <p class="lead">
+              BusinessIdeas.com uses real-world signals (not hype) to recommend ideas with realistic paths to revenue.
+            </p>
+
+            <div class="grid3" style="grid-template-columns:1fr; gap:12px;">
+              <div class="card">
+                <strong>Demand + distribution fit</strong>
+                <p>Ideas are paired with the channels they perform best in (search, social, community, B2B outreach).</p>
+              </div>
+              <div class="card">
+                <strong>Cost vs ROI</strong>
+                <p>We favor models that are achievable without burning months or cash before validation.</p>
+              </div>
+              <div class="card">
+                <strong>Scale & automation potential</strong>
+                <p>We highlight options that can evolve into semi-automated or systemized income streams.</p>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;">
+              <button class="btn" type="button" data-open-quiz>Take the quiz →</button>
+              <div class="micro" style="margin-top:10px;">
+                <span>✅ Instant results preview</span>
+                <span>🔓 Full plan unlock at the end</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: WHO IT'S FOR -->
+    <section id="for">
+      <div class="container">
+        <div class="section-card">
+          <h2 class="h2">Who this is for</h2>
+          <p class="lead">If you want clarity before committing time or money, this is designed for you.</p>
+
+          <div class="grid3">
+            <div class="card">
+              <strong>Builders & beginners</strong>
+              <p>Get a realistic starting point and a simple next step.</p>
+            </div>
+            <div class="card">
+              <strong>Professionals pivoting</strong>
+              <p>Translate existing skills into a business model that fits your constraints.</p>
+            </div>
+            <div class="card">
+              <strong>People who hate fluff</strong>
+              <p>No “top 200 ideas” content farms — just personalized filtering.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;">
+            <div class="pill">✖ Not for get-rich-quick schemes</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA BAND -->
+    <section>
+      <div class="container">
+        <div class="cta-band">
+          <div class="text">
+            <h3>Your business idea is already out there.</h3>
+            <p>Let’s narrow it down to the one that actually fits you — and show a practical next step.</p>
+          </div>
+          <button class="btn" type="button" data-open-quiz>Take the Free Business Idea Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <div>© <span id="year"></span> BusinessIdeas.com</div>
+          <div style="display:flex; gap:16px; flex-wrap:wrap;">
+            <a href="#" onclick="return false;">Privacy</a>
+            <a href="#" onclick="return false;">Terms</a>
+            <span>We respect your privacy. Your answers are confidential.</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Sticky mobile CTA -->
+  <div class="sticky-cta" role="region" aria-label="Sticky call to action">
+    <div class="wrap">
+      <div class="copy">
+        <b>Find your best idea</b>
+        <span>60-second quiz • Instant results</span>
+      </div>
+      <button class="btn" type="button" data-open-quiz>Start</button>
+    </div>
+  </div>
+
+  <!-- QUIZ MODAL (Mock / Starter UI) -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Idea Finder Quiz">
+      <div class="modal-head">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="chip">IDEA FINDER</div>
+          <strong>Step 1 of 7</strong>
+        </div>
+        <button class="x" id="closeQuizBtn" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="progress" aria-hidden="true" style="margin-bottom:14px;">
+          <div class="bar" style="width:14%;"></div>
+        </div>
+
+        <h4>What’s your primary goal?</h4>
+        <p>Choose one — we’ll tailor the recommendations accordingly.</p>
+
+        <div class="choices">
+          <div class="choice" data-next><span>Start a side income</span><span>→</span></div>
+          <div class="choice" data-next><span>Replace my salary</span><span>→</span></div>
+          <div class="choice" data-next><span>Build something scalable</span><span>→</span></div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn secondary" id="backBtn" type="button" disabled>Back</button>
+        <div class="kbd"><span>Tip:</span> <i>Enter</i> to select • <i>Esc</i> to close</div>
+        <button class="btn" id="continueBtn" type="button">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const yearEl = document.getElementById('year');
+    yearEl.textContent = new Date().getFullYear();
+
+    function openQuiz(){
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeQuiz(){
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('openQuizBtn').addEventListener('click', openQuiz);
+    document.getElementById('closeQuizBtn').addEventListener('click', closeQuiz);
+
+    document.querySelectorAll('[data-open-quiz]').forEach(el=>{
+      el.addEventListener('click', openQuiz);
+    });
+
+    // Close on overlay click
+    overlay.addEventListener('click', (e)=>{
+      if(e.target === overlay) closeQuiz();
+    });
+
+    // Esc to close
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape' && overlay.classList.contains('show')) closeQuiz();
+    });
+
+    // Fake "continue" behavior (stub)
+    const continueBtn = document.getElementById('continueBtn');
+    const choices = [...document.querySelectorAll('.choice')];
+    let selectedIndex = 0;
+
+    function selectChoice(i){
+      selectedIndex = i;
+      choices.forEach((c, idx)=>{
+        c.style.borderColor = idx === i ? 'rgba(43,111,255,.45)' : 'var(--border)';
+        c.style.boxShadow = idx === i ? '0 14px 24px rgba(43,111,255,.12)' : 'none';
+      });
+    }
+    selectChoice(0);
+
+    choices.forEach((c, i)=>{
+      c.addEventListener('click', ()=>{
+        selectChoice(i);
+      });
+    });
+
+    continueBtn.addEventListener('click', ()=>{
+      // Replace with routing to your real quiz page or step engine
+      alert("Quiz stub: wire this to your step logic / results page.");
+    });
+
+    // Enter selects current choice
+    window.addEventListener('keydown', (e)=>{
+      if(!overlay.classList.contains('show')) return;
+      if(e.key === 'Enter'){
+        continueBtn.click();
+      }
+      if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+        selectChoice((selectedIndex + 1) % choices.length);
+      }
+      if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+        selectChoice((selectedIndex - 1 + choices.length) % choices.length);
+      }
+    });
+  </script>
+</body>
+</html>

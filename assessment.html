@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BusinessIdeas.com — Assessment</title>
+
+<style>
+:root{
+  --bg:#070A10;
+  --card:#0c1220;
+  --stroke:#ffffff14;
+  --text:#f4f6fb;
+  --muted:#9aa6c6;
+  --accent:#6ee7ff;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:linear-gradient(180deg,#070A10,#0B0D12);
+  color:var(--text);
+}
+.wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.card{
+  background:linear-gradient(180deg,#0d1426,#090d18);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  padding:20px;
+  width:100%;
+  max-width:520px;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.brand{font-weight:650}
+.progress{font-size:13px;color:var(--muted)}
+h1{
+  font-size:22px;
+  line-height:1.3;
+  letter-spacing:-.03em;
+  margin:0 0 16px;
+}
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.option{
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--stroke);
+  background:#0b1020;
+  cursor:pointer;
+  transition:.15s;
+}
+.option.selected{
+  border-color:var(--accent);
+  background:#0e1a2c;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:20px;
+}
+button{
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid #ffffff20;
+  background:linear-gradient(180deg,#121a2e,#0a0f1c);
+  color:var(--text);
+  font-weight:650;
+  cursor:pointer;
+}
+button:disabled{opacity:.4;cursor:not-allowed}
+.back{
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="header">
+      <div class="brand">BusinessIdeas.com</div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <h1 id="question"></h1>
+    <div class="options" id="options"></div>
+
+    <div class="footer">
+      <button class="back" id="backBtn">← Back</button>
+      <button id="nextBtn" disabled>Next</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===============================
+   QUIZ DATA (NORMALIZED)
+   =============================== */
+
+const quiz = [
+  {
+    key: "goal",
+    q: "What is your primary goal right now?",
+    type: "single",
+    options: [
+      { label: "Start a side-hustle alongside my current job", value: "side_hustle" },
+      { label: "Replace my current income", value: "replace_income" },
+      { label: "Build a long-term, scalable business", value: "scalable" },
+      { label: "Explore business ideas without immediate pressure", value: "explore" }
+    ]
+  },
+  {
+    key: "time",
+    q: "How much time can you realistically dedicate per week?",
+    type: "single",
+    options: [
+      { label: "Less than 5 hours", value: "lt_5" },
+      { label: "5–10 hours", value: "5_10" },
+      { label: "10–20 hours", value: "10_20" },
+      { label: "20+ hours", value: "20_plus" }
+    ]
+  },
+  {
+    key: "experience",
+    q: "Which best describes your experience?",
+    type: "single",
+    options: [
+      { label: "No business experience", value: "none" },
+      { label: "Some side projects or freelancing", value: "some_experience" },
+      { label: "Ran a small business before", value: "small_business" },
+      { label: "Built or managed scalable systems", value: "advanced" }
+    ]
+  },
+  {
+    key: "skills",
+    q: "Which skills best describe you? (Select up to 2)",
+    type: "multi",
+    limit: 2,
+    options: [
+      { label: "Writing / communication", value: "writing" },
+      { label: "Sales / persuasion", value: "sales" },
+      { label: "Technical / analytical", value: "technical" },
+      { label: "Design / creative", value: "design" },
+      { label: "Organization / operations", value: "operations" },
+      { label: "Teaching / explaining", value: "teaching" }
+    ]
+  },
+  {
+    key: "budget",
+    q: "How much money are you comfortable investing to get started?",
+    type: "single",
+    options: [
+      { label: "$0 – $100", value: "0_100" },
+      { label: "$100 – $500", value: "100_500" },
+      { label: "$500 – $2,000", value: "500_2000" },
+      { label: "$2,000+", value: "2000_plus" }
+    ]
+  },
+  {
+    key: "preference",
+    q: "Which type of business sounds most appealing?",
+    type: "single",
+    options: [
+      { label: "Online / location-independent", value: "online" },
+      { label: "Local or service-based", value: "local" },
+      { label: "Product-focused", value: "product" },
+      { label: "Consulting / advisory", value: "consulting" },
+      { label: "No strong preference", value: "no_preference" }
+    ]
+  }
+];
+
+/* ===============================
+   STATE
+   =============================== */
+
+let step = 0;
+const answers = {};
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const progressEl = document.getElementById("progress");
+const nextBtn = document.getElementById("nextBtn");
+const backBtn = document.getElementById("backBtn");
+
+/* ===============================
+   RENDER
+   =============================== */
+
+function render(){
+  const current = quiz[step];
+  questionEl.textContent = current.q;
+  progressEl.textContent = `Question ${step + 1} of ${quiz.length}`;
+  optionsEl.innerHTML = "";
+  nextBtn.disabled = true;
+  backBtn.disabled = step === 0;
+
+  let selected = answers[current.key] || [];
+
+  current.options.forEach(opt=>{
+    const div = document.createElement("div");
+    div.className = "option";
+    div.textContent = opt.label;
+
+    if (Array.isArray(selected) && selected.includes(opt.value)) {
+      div.classList.add("selected");
+    }
+    if (selected === opt.value) {
+      div.classList.add("selected");
+    }
+
+    div.onclick = () => {
+      if (current.type === "single") {
+        answers[current.key] = opt.value;
+        document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+        div.classList.add("selected");
+        nextBtn.disabled = false;
+      } else {
+        if (!answers[current.key]) answers[current.key] = [];
+
+        if (answers[current.key].includes(opt.value)) {
+          answers[current.key] = answers[current.key].filter(v => v !== opt.value);
+          div.classList.remove("selected");
+        } else if (answers[current.key].length < current.limit) {
+          answers[current.key].push(opt.value);
+          div.classList.add("selected");
+        }
+        nextBtn.disabled = answers[current.key].length === 0;
+      }
+    };
+
+    optionsEl.appendChild(div);
+  });
+
+  if (
+    (Array.isArray(selected) && selected.length) ||
+    (!Array.isArray(selected) && selected)
+  ) {
+    nextBtn.disabled = false;
+  }
+}
+
+/* ===============================
+   NAVIGATION
+   =============================== */
+
+nextBtn.onclick = () => {
+  if (step < quiz.length - 1) {
+    step++;
+    render();
+  } else {
+    sessionStorage.setItem("quizAnswers", JSON.stringify(answers));
+    window.location.href = "results.html";
+  }
+};
+
+backBtn.onclick = () => {
+  if (step > 0) {
+    step--;
+    render();
+  }
+};
+
+render();
+</script>
+</body>
+</html>

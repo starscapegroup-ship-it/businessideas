@@ -1,0 +1,830 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BusinessIdeas.com — Find the Right Business Idea</title>
+  <meta name="description" content="A short assessment that matches business ideas to your skills, budget, and goals. Free. Takes ~2 minutes. No signup required to start." />
+  <meta name="theme-color" content="#0b0d12" />
+
+  <style>
+    /* ---------------------------
+       Modern editorial UI system
+       --------------------------- */
+
+    :root{
+      --bg: #070A10;
+      --bg2:#0B0D12;
+      --card:#0f1420cc;
+      --card2:#0f142099;
+      --stroke:#ffffff14;
+
+      --text:#f4f6fb;
+      --muted:#b7c0d8;
+      --muted2:#92a0c2;
+
+      --accent:#6ee7ff;      /* icy-cyan accent (not the usual neon blue) */
+      --accent2:#a78bfa;     /* faint violet for depth */
+      --good:#72f7b3;
+
+      --shadow: 0 18px 60px #00000070;
+      --shadow2: 0 10px 30px #00000055;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, #13224a 0%, transparent 55%),
+        radial-gradient(900px 700px at 90% 10%, #2a164a 0%, transparent 50%),
+        radial-gradient(900px 700px at 60% 120%, #0f3a3a 0%, transparent 52%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing:-0.01em;
+      overflow-x:hidden;
+    }
+
+    /* subtle grain overlay */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.08;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ width:min(var(--max), calc(100% - 48px)); margin:0 auto; }
+
+    /* ---------------------------
+       Top bar / nav
+       --------------------------- */
+    .topbar{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, #070a10cc 0%, #070a1099 100%);
+      border-bottom:1px solid var(--stroke);
+    }
+    .topbar .inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:650;
+      letter-spacing:-0.02em;
+    }
+    .mark{
+      width:28px; height:28px; border-radius:10px;
+      background:
+        radial-gradient(16px 16px at 35% 30%, var(--accent) 0%, transparent 60%),
+        radial-gradient(18px 18px at 80% 70%, var(--accent2) 0%, transparent 62%),
+        linear-gradient(145deg, #111a2c, #0a0f1c);
+      border:1px solid #ffffff1a;
+      box-shadow: 0 10px 22px #00000060;
+    }
+    .nav{
+      display:flex; gap:18px; align-items:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .nav a{ padding:8px 10px; border-radius:10px; }
+    .nav a:hover{ background:#ffffff0f; color:var(--text); }
+
+    .cta{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius: 14px;
+      border:1px solid #ffffff20;
+      background:
+        radial-gradient(80% 140% at 20% 0%, #6ee7ff33 0%, transparent 60%),
+        linear-gradient(180deg, #141c2f 0%, #0d1220 100%);
+      box-shadow: var(--shadow2);
+      font-weight:650;
+      letter-spacing:-0.01em;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      white-space:nowrap;
+    }
+    .cta:hover{
+      transform: translateY(-1px);
+      border-color:#ffffff35;
+      box-shadow: 0 16px 46px #00000070;
+    }
+    .cta:active{ transform: translateY(0px) scale(.99); }
+    .cta .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: radial-gradient(circle at 35% 35%, var(--good) 0%, #19c37d 45%, #0b6b44 100%);
+      box-shadow: 0 0 0 4px #72f7b31a;
+    }
+
+    /* ---------------------------
+       Hero
+       --------------------------- */
+    .hero{
+      padding:56px 0 34px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .hero-card{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      background:
+        radial-gradient(1200px 500px at 20% 0%, #6ee7ff1f 0%, transparent 50%),
+        radial-gradient(900px 420px at 90% 10%, #a78bfa1a 0%, transparent 52%),
+        linear-gradient(180deg, #0c1220cc 0%, #090d16cc 100%);
+      box-shadow: var(--shadow);
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card::after{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 240px at 15% 0%, #6ee7ff24 0%, transparent 70%),
+        radial-gradient(380px 240px at 85% 25%, #a78bfa20 0%, transparent 72%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .hero-card > *{ position:relative; z-index:1; }
+
+    .kicker{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      color:var(--muted);
+      font-size:13px;
+      padding:8px 12px;
+      border:1px solid #ffffff18;
+      border-radius:999px;
+      background:#0b1020aa;
+    }
+    .kicker b{
+      color:var(--text);
+      font-weight:650;
+    }
+
+    h1{
+      margin:18px 0 12px;
+      font-size: clamp(34px, 4.2vw, 54px);
+      line-height:1.02;
+      letter-spacing:-0.04em;
+      font-weight:760;
+    }
+    .sub{
+      margin:0;
+      max-width: 56ch;
+      color: var(--muted);
+      font-size: 16.5px;
+      line-height:1.55;
+    }
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:22px;
+      flex-wrap:wrap;
+    }
+
+    .primary{
+      padding:14px 18px;
+      border-radius: 16px;
+      border:1px solid #ffffff22;
+      background:
+        radial-gradient(90% 140% at 15% 0%, #6ee7ff50 0%, transparent 55%),
+        linear-gradient(180deg, #121a2e 0%, #0a0f1c 100%);
+      box-shadow: 0 18px 55px #00000075;
+      font-weight:700;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .primary:hover{
+      transform: translateY(-1px);
+      border-color:#ffffff38;
+      box-shadow: 0 26px 70px #00000080;
+    }
+    .primary .arrow{
+      width:18px; height:18px; display:inline-block;
+      border-radius:7px;
+      background:#ffffff12;
+      border:1px solid #ffffff18;
+      display:grid; place-items:center;
+    }
+
+    .ghost{
+      padding:14px 16px;
+      border-radius: 16px;
+      border:1px solid #ffffff1a;
+      background:#0b1020a6;
+      color: var(--text);
+      display:inline-flex; align-items:center; gap:10px;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .ghost:hover{ background:#ffffff10; border-color:#ffffff28; }
+
+    .meta{
+      margin-top:14px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      color: var(--muted2);
+      font-size:13px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:#0b1020aa;
+      border:1px solid #ffffff14;
+    }
+    .pill i{
+      width:8px;height:8px;border-radius:999px;
+      background: #ffffff2a;
+    }
+    .pill i.good{ background: var(--good); box-shadow:0 0 0 4px #72f7b318; }
+
+    /* side panel */
+    .side{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, #0c1220aa 0%, #090d16aa 100%);
+      box-shadow: var(--shadow2);
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .side h3{
+      margin:0;
+      font-size:14px;
+      color:var(--muted2);
+      font-weight:650;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    .side .stat{
+      margin-top:10px;
+      padding:16px;
+      border-radius: var(--radius-lg);
+      background:#0b1020aa;
+      border:1px solid #ffffff14;
+    }
+    .stat b{
+      display:block;
+      font-size:22px;
+      letter-spacing:-0.03em;
+      margin-bottom:6px;
+    }
+    .stat span{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      display:block;
+    }
+    .micro-note{
+      color:var(--muted2);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    /* ---------------------------
+       Sections
+       --------------------------- */
+    section{
+      padding:24px 0;
+    }
+
+    .trust{
+      padding:18px 0 0;
+    }
+    .trustbar{
+      border:1px solid var(--stroke);
+      background:#0b1020a6;
+      border-radius: 999px;
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+    }
+
+    .card{
+      border:1px solid var(--stroke);
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(180deg, #0c1220aa 0%, #090d16aa 100%);
+      box-shadow: var(--shadow2);
+      padding:22px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:22px;
+      letter-spacing:-0.03em;
+    }
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:15.5px;
+    }
+    .bullets{
+      margin:0;
+      padding-left: 18px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:15.5px;
+    }
+    .bullets li{ margin:6px 0; }
+
+    /* how it works */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+    .step{
+      padding:16px;
+      border-radius: var(--radius-lg);
+      border:1px solid #ffffff14;
+      background:#0b1020aa;
+      position:relative;
+      overflow:hidden;
+    }
+    .step::after{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(240px 140px at 10% 0%, #6ee7ff18 0%, transparent 68%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .step > *{ position:relative; z-index:1; }
+    .step b{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      letter-spacing:-0.02em;
+      font-size:15px;
+    }
+    .n{
+      width:28px;height:28px;border-radius:12px;
+      display:grid; place-items:center;
+      background:#ffffff10;
+      border:1px solid #ffffff18;
+      font-weight:700;
+    }
+    .step p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14.5px;
+      line-height:1.6;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size:26px;
+      letter-spacing:-0.03em;
+    }
+    .section-title span{
+      color:var(--muted2);
+      font-size:13px;
+    }
+
+    /* receive */
+    .checklist{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px 14px;
+      margin-top:10px;
+    }
+    .check{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px 12px;
+      border-radius: 16px;
+      border:1px solid #ffffff14;
+      background:#0b1020aa;
+    }
+    .check i{
+      width:18px;height:18px;border-radius:8px;
+      border:1px solid #ffffff18;
+      background: radial-gradient(circle at 30% 30%, #72f7b355 0%, #0b6b4430 55%, transparent 70%);
+      margin-top:2px;
+      flex:0 0 auto;
+    }
+    .check div b{
+      display:block;
+      font-size:14.5px;
+      letter-spacing:-0.02em;
+      margin-bottom:4px;
+    }
+    .check div span{
+      color:var(--muted);
+      font-size:13.5px;
+      line-height:1.45;
+    }
+
+    /* FAQ */
+    details{
+      border:1px solid #ffffff14;
+      background:#0b1020aa;
+      border-radius: 16px;
+      padding:14px 14px;
+    }
+    details + details{ margin-top:10px; }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:650;
+      letter-spacing:-0.02em;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    summary .q{
+      color:var(--text);
+      font-size:14.5px;
+    }
+    summary .chev{
+      width:28px;height:28px;border-radius:12px;
+      display:grid; place-items:center;
+      background:#ffffff10;
+      border:1px solid #ffffff18;
+      flex:0 0 auto;
+      transition: transform .18s ease;
+    }
+    details[open] summary .chev{ transform: rotate(180deg); }
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14.5px;
+      line-height:1.6;
+    }
+
+    /* Final CTA */
+    .final{
+      padding:26px;
+      border-radius: var(--radius-xl);
+      border:1px solid var(--stroke);
+      background:
+        radial-gradient(900px 420px at 20% 0%, #6ee7ff1f 0%, transparent 60%),
+        linear-gradient(180deg, #0c1220cc 0%, #090d16cc 100%);
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .final h2{
+      margin:0;
+      font-size:24px;
+      letter-spacing:-0.03em;
+    }
+    .final p{
+      margin:6px 0 0;
+      color:var(--muted);
+      line-height:1.6;
+      max-width: 62ch;
+      font-size:15px;
+    }
+
+    footer{
+      padding:30px 0 46px;
+      color:var(--muted2);
+      font-size:13px;
+    }
+    footer .f{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      border-top:1px solid var(--stroke);
+      padding-top:16px;
+    }
+    footer a{ color:var(--muted); }
+    footer a:hover{ color:var(--text); }
+
+    /* ---------------------------
+       Responsive
+       --------------------------- */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .steps{ grid-template-columns: 1fr; }
+      .grid2{ grid-template-columns: 1fr; }
+      .checklist{ grid-template-columns: 1fr; }
+      .final{ flex-direction:column; align-items:flex-start; }
+      .nav{ display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap inner">
+      <a class="brand" href="#" aria-label="BusinessIdeas.com home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>BusinessIdeas.com</span>
+      </a>
+
+      <nav class="nav" aria-label="Site">
+        <a href="#how">How it works</a>
+        <a href="#receive">What you get</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a class="cta" href="assessment.html">
+        <span class="dot" aria-hidden="true"></span>
+        Start Assessment
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-card">
+          <div class="kicker">
+            <b>Free assessment</b> • neutral, practical recommendations
+          </div>
+
+          <h1>Find the Right Business Idea<br/>Before You Invest Time or Money</h1>
+
+          <p class="sub">
+            A short assessment that matches business ideas to your skills, budget, and goals —
+            based on proven business models, not trends.
+          </p>
+
+          <div class="hero-actions">
+            <a class="primary" href="/assessment.html">
+              Start the Free Assessment
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a class="ghost" href="#how">
+              See how it works
+              <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+
+          <div class="meta" role="list" aria-label="Key details">
+            <span class="pill" role="listitem"><i class="good" aria-hidden="true"></i> Takes ~2 minutes</span>
+            <span class="pill" role="listitem"><i aria-hidden="true"></i> No signup required to start</span>
+            <span class="pill" role="listitem"><i aria-hidden="true"></i> Results shown instantly</span>
+          </div>
+        </div>
+
+        <aside class="side" aria-label="Assessment highlights">
+          <div>
+            <h3>What this is</h3>
+
+            <div class="stat">
+              <b>Decision support</b>
+              <span>
+                We narrow your options to business models that fit your time, budget, and preferences —
+                so you can stop guessing and start evaluating.
+              </span>
+            </div>
+
+            <div class="stat">
+              <b>Practical filters</b>
+              <span>
+                Less “inspiration,” more constraints: time per week, risk tolerance, skill alignment,
+                and startup cost comfort.
+              </span>
+            </div>
+          </div>
+
+          <p class="micro-note">
+            Note: You don’t need an email to start or view results. Email is optional only if you want a copy later.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="trust">
+      <div class="wrap">
+        <div class="trustbar">
+          Trusted by professionals exploring their next business idea — without hype or unrealistic promises.
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section>
+      <div class="wrap grid2">
+        <div class="card">
+          <h2>Choosing a Business Idea Is the Hardest Part</h2>
+          <p>
+            Most people don’t fail because they lack motivation. They fail because they pick a business
+            that doesn’t fit their situation — and the mismatch shows up later as stress, churn, and stalled progress.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Common mistakes</h2>
+          <ul class="bullets">
+            <li>Not enough time to execute consistently</li>
+            <li>Underestimating startup costs and ramp time</li>
+            <li>Following trends without understanding operations</li>
+            <li>Skill mismatch (or no clear advantage)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>How the Assessment Works</h2>
+          <span>Simple inputs → grounded recommendations</span>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <b><span class="n">1</span> Answer a few questions</b>
+            <p>Skills, time per week, budget comfort, and how you want the business to feel day-to-day.</p>
+          </div>
+
+          <div class="step">
+            <b><span class="n">2</span> See your results instantly</b>
+            <p>We rank business model categories that fit your situation — not what’s trending this week.</p>
+          </div>
+
+          <div class="step">
+            <b><span class="n">3</span> Get optional next steps</b>
+            <p>Examples, practical next actions, and optional learning resources if you want a roadmap.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="primary" href="/assessment.html">Start the Free Assessment <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="ghost" href="#faq">Read the FAQ <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT YOU RECEIVE -->
+    <section id="receive">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>What You’ll Receive</h2>
+          <span>Built for clarity, not dopamine</span>
+        </div>
+
+        <div class="card">
+          <div class="checklist">
+            <div class="check">
+              <i aria-hidden="true"></i>
+              <div>
+                <b>Best-fit business model categories</b>
+                <span>Ranked by realism based on your time, budget, and preferences.</span>
+              </div>
+            </div>
+
+            <div class="check">
+              <i aria-hidden="true"></i>
+              <div>
+                <b>Example ideas within each category</b>
+                <span>Concrete examples to help you evaluate, not daydream.</span>
+              </div>
+            </div>
+
+            <div class="check">
+              <i aria-hidden="true"></i>
+              <div>
+                <b>Practical next steps</b>
+                <span>What to do first to validate quickly and reduce risk.</span>
+              </div>
+            </div>
+
+            <div class="check">
+              <i aria-hidden="true"></i>
+              <div>
+                <b>Optional recommended resources</b>
+                <span>Only if you want a step-by-step guide for your path.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="section-title">
+          <h2>Frequently Asked Questions</h2>
+          <span>Quick answers</span>
+        </div>
+
+        <div class="card">
+          <details>
+            <summary>
+              <span class="q">Is this really free?</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <p>Yes. The assessment and the results page are free.</p>
+          </details>
+
+          <details>
+            <summary>
+              <span class="q">How long does it take?</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <p>Most people complete it in about two minutes.</p>
+          </details>
+
+          <details>
+            <summary>
+              <span class="q">Will I need to enter my email to see results?</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <p>
+              No. Your results are shown immediately after completing the assessment.
+              Email is optional only if you want a copy for reference.
+            </p>
+          </details>
+
+          <details>
+            <summary>
+              <span class="q">Is this only for online businesses?</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <p>
+              No. Depending on your answers, results may include online, local, service-based, product-based,
+              or scalable models.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section>
+      <div class="wrap">
+        <div class="final">
+          <div>
+            <h2>Start with clarity</h2>
+            <p>
+              Choosing the right business model upfront saves time, money, and frustration later.
+              Get a grounded shortlist in minutes.
+            </p>
+          </div>
+          <a class="primary" href="assessment.html">Start the Free Assessment <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap f">
+      <div>© <span id="y"></span> BusinessIdeas.com</div>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+    </div>
+    <script>
+      // tiny helper; remove if you want pure HTML/CSS only
+      document.getElementById('y').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+</body>
+</html>

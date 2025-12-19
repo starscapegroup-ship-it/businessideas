@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BusinessIdeas.com — Assessment</title>
+
+<style>
+:root{
+  --bg:#070A10;
+  --card:#0c1220;
+  --stroke:#ffffff14;
+  --text:#f4f6fb;
+  --muted:#9aa6c6;
+  --accent:#6ee7ff;
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  background:linear-gradient(180deg,#070A10,#0B0D12);
+  color:var(--text);
+}
+
+/* Layout */
+.wrap{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:16px;
+}
+.card{
+  background:linear-gradient(180deg,#0d1426,#090d18);
+  border:1px solid var(--stroke);
+  border-radius:var(--radius);
+  padding:20px;
+  max-width:520px;
+  margin:0 auto;
+  width:100%;
+}
+
+/* Header */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+.brand{
+  font-weight:650;
+  letter-spacing:-.02em;
+}
+.progress{
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* Question */
+h1{
+  font-size:22px;
+  line-height:1.25;
+  letter-spacing:-.03em;
+  margin:0 0 16px;
+}
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.option{
+  padding:14px 14px;
+  border-radius:14px;
+  border:1px solid var(--stroke);
+  background:#0b1020;
+  cursor:pointer;
+  transition:.15s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.option:hover{
+  border-color:#ffffff2a;
+}
+.option input{
+  display:none;
+}
+.option span{
+  font-size:15px;
+  line-height:1.4;
+}
+.option.selected{
+  border-color:var(--accent);
+  background:#0e1a2c;
+}
+
+/* Footer */
+.footer{
+  margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+button{
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid #ffffff20;
+  background:linear-gradient(180deg,#121a2e,#0a0f1c);
+  color:var(--text);
+  font-weight:650;
+  cursor:pointer;
+}
+button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+.back{
+  background:none;
+  border:none;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Mobile polish */
+@media(min-width:768px){
+  h1{font-size:24px}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <!-- QUESTION CARD -->
+  <div class="card">
+
+    <div class="header">
+      <div class="brand">BusinessIdeas.com</div>
+      <div class="progress">Question 1 of 6</div>
+    </div>
+
+    <!-- QUESTION -->
+    <h1>What is your primary goal right now?</h1>
+
+    <div class="options" id="options">
+      <label class="option">
+        <input type="radio" name="q1" value="side-hustle">
+        <span>Start a <b>side-hustle</b> alongside my current job</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="replace-income">
+        <span>Replace my current income</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="scalable">
+        <span>Build a long-term, scalable business</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="explore">
+        <span>Explore business ideas without immediate pressure</span>
+      </label>
+    </div>
+
+    <!-- NAV -->
+    <div class="footer">
+      <button class="back" disabled>← Back</button>
+      <button id="nextBtn" disabled>Next</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const options = document.querySelectorAll('.option');
+const nextBtn = document.getElementById('nextBtn');
+
+options.forEach(opt=>{
+  opt.addEventListener('click',()=>{
+    options.forEach(o=>o.classList.remove('selected'));
+    opt.classList.add('selected');
+    opt.querySelector('input').checked=true;
+    nextBtn.disabled=false;
+  });
+});
+</script>
+</body>
+</html>
